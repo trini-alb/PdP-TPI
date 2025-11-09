@@ -1,75 +1,85 @@
 package Vista;
-
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.Font;
+import java.awt.Color;
 import Controlador.Controlador;
-
 public class MainGUI {
 
     private Controlador controlador;
     private JFrame frame;
-    private JButton btnEntrada, btnSalida, btnMostrar;
+    private JButton btnCancelar, btnCalcular, btnGuardar;
     private JLabel lblPlazas;
+    private JTextField txtUsuario;
+    private JComboBox<String> comboPlazas;
+    private JLabel lblIngreso;
+    private JLabel lblEgreso;
+    private JLabel lblTarifa;
 
     public MainGUI() {
         controlador = new Controlador();
 
         frame = new JFrame("Estacionamiento");
         frame.setSize(420, 220);
+        // Se define el tamaño una sola vez
+        frame.setSize(420, 280);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null); // Centra la ventana
 
-        btnEntrada = new JButton("Registrar Entrada");
-        btnEntrada.setBounds(20, 20, 170, 30);
-        btnEntrada.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controlador.registrarEntrada();
-                actualizarPlazas();
-            }
-        });
+        JLabel lblTitulo = new JLabel("Estacionamiento UTN✯");
+        lblTitulo.setBounds(120, 10, 200, 30);
+        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 18));
+        frame.add(lblTitulo);
 
-        btnSalida = new JButton("Registrar Salida");
-        btnSalida.setBounds(210, 20, 170, 30);
-        btnSalida.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controlador.registrarSalida();
-                actualizarPlazas();
-            }
-        });
+        JLabel lblUsuario = new JLabel("Ingresar Usuario:");
+        lblUsuario.setBounds(20, 50, 120, 25);
+        frame.add(lblUsuario);
+        JTextField txtUsuario = new JTextField();
+        txtUsuario = new JTextField();
+        txtUsuario.setBounds(150, 50, 230, 25);
+        frame.add(txtUsuario);
 
-        btnMostrar = new JButton("Mostrar Plazas");
-        btnMostrar.setBounds(20, 70, 360, 30);
-        btnMostrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controlador.mostrarPlazas();
-                actualizarPlazas();
-            }
-        });
+        JLabel lblPlaza = new JLabel("Seleccionar plaza:");
+        lblPlaza.setBounds(20, 85, 120, 25);
+        frame.add(lblPlaza);
 
-        lblPlazas = new JLabel("Plazas disponibles: " + controlador.getPlazasDisponibles());
-        lblPlazas.setBounds(20, 120, 360, 30);
+        String[] plazas = {"Plaza 1", "Plaza 2", "Plaza 3"};
+        JComboBox<String> comboPlazas = new JComboBox<>(plazas);
+        comboPlazas = new JComboBox<>(plazas);
+        comboPlazas.setBounds(150, 85, 230, 25);
+        frame.add(comboPlazas);
+        JLabel lblIngreso = new JLabel("Fecha - Hora de ingreso: " + fechaHoraEntrada);
 
-        frame.add(btnEntrada);
-        frame.add(btnSalida);
-        frame.add(btnMostrar);
-        frame.add(lblPlazas);
+        // Estas fechas deberían ser actualizadas por el controlador.
+        // Por ahora, las inicializamos con texto de ejemplo.
+        lblIngreso = new JLabel("Fecha - Hora de ingreso: (esperando)");
+        lblIngreso.setBounds(20, 120, 360, 25);
+        frame.add(lblIngreso);
+        JLabel lblEgreso = new JLabel("Fecha - Hora de egreso: " + fechaHoraSalida);
 
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
+        lblEgreso = new JLabel("Fecha - Hora de egreso: (esperando)");
+        lblEgreso.setBounds(20, 145, 360, 25);
+        frame.add(lblEgreso);
+        JLabel lblTarifa = new JLabel("Tarifa a cobrar: $000000.00");
 
-    private void actualizarPlazas() {
-        lblPlazas.setText("Plazas disponibles: " + controlador.getPlazasDisponibles());
-    }
+        lblTarifa = new JLabel("Tarifa a cobrar: $0.00");
+        lblTarifa.setBounds(20, 170, 360, 25);
+        frame.add(lblTarifa);
+        JButton btnGuardar = new JButton("Guardar");
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new MainGUI();
-            }
-        });
+        // Usamos las variables de la clase, no creamos nuevas
+        btnGuardar = new JButton("Guardar");
+        btnGuardar.setBounds(60, 200, 120, 30);
+        btnGuardar.setBackground(Color.GREEN);
+        frame.add(btnGuardar);
+        JButton btnCancelar = new JButton("Cancelar");
+
+        btnCancelar = new JButton("Cancelar");
+        btnCancelar.setBounds(220, 200, 120, 30);
+        btnCancelar.setBackground(Color.RED);
+        frame.add(btnCancelar);
+
+        frame.setVisible(true); // Hacemos visible la ventana al final
     }
 }
