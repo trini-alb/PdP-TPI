@@ -45,10 +45,10 @@ public class Plaza {
             this.estado = Estado.DISPONIBLE;
             this.fechaHoraDesocupacion = LocalDateTime.now();
             if (entradaSalida != null) entradaSalida.registrarSalida();
-            System.out.println("Plaza " + numero + " liberada en " + fechaHoraDesocupacion);
+            // Notificar liberación de plaza (Vista debe encargarse de mostrar mensajes)
             return true;
         } else {
-            System.out.println("Plaza " + numero + " no está ocupada"); 
+            // Notificar que la plaza no está ocupada (Vista debe encargarse de mostrar mensajes)
             return false;
         }
     }
@@ -58,21 +58,21 @@ public class Plaza {
             this.entradaSalida = entradaSalida;
             this.estado = Estado.OCUPADA;
             this.fechaHoraOcupacion = LocalDateTime.now();
-            System.out.println("Plaza " + numero + " ocupada en " + fechaHoraOcupacion);
+            // Notificar ocupación de plaza (Vista debe encargarse de mostrar mensajes)
             return true;
         } else {
-            System.out.println("Plaza " + numero + " no está disponible"); 
+            // Notificar que la plaza no está disponible (Vista debe encargarse de mostrar mensajes)
             return false;
         }
     }
 
     public void consultarEstado() {
-        System.out.println("Plaza " + numero + " estado: " + estado);
+        // La vista debe encargarse de mostrar el estado de la plaza
     }
 
     public void actualizarEstado(Estado nuevoEstado) {
         this.estado = nuevoEstado;
-        System.out.println("Plaza " + numero + " actualizado a estado: " + estado);
+        // La vista debe encargarse de mostrar la actualización de estado
     }
 
     public Estado conocerEstado() {

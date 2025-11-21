@@ -26,34 +26,33 @@ public class Cuenta {
     }
 
     public void registrarCuenta() {
-        System.out.println("Registrando cuenta...");
+        // Notificar registro de cuenta (Vista debe encargarse de mostrar mensajes)
     }
 
     public void recargarMonto(double monto) {
         if (monto > 0) {
             saldo += monto;
-            System.out.println("Monto recargado exitosamente. Nuevo saldo: " + saldo);
+            // Notificar recarga exitosa (Vista debe encargarse de mostrar mensajes)
         } else {
-            System.out.println("Monto inválido. La recarga debe ser mayor a cero.");
+            // Notificar monto inválido (Vista debe encargarse de mostrar mensajes)
         }
     }
 
     public void descontarMonto(double monto) {
         if (monto <= 0) {
-            System.out.println("Monto inválido. La descontación debe ser mayor a cero.");
+            // Notificar monto inválido (Vista debe encargarse de mostrar mensajes)
             return;
         }
         if (saldo >= monto) {
             saldo -= monto;
-            System.out.println("Monto descontado exitosamente. Nuevo saldo: " + saldo);
+            // Notificar descuento exitoso (Vista debe encargarse de mostrar mensajes)
         } else {
-            System.out.println("Saldo insuficiente para descontar el monto solicitado.");
+            // Notificar saldo insuficiente (Vista debe encargarse de mostrar mensajes)
         }
     }
 
     public void conocerCobroSaldo() {
-        System.out.println("Cobro asociado: " + (cobro != null ? cobro.getMonto() : "Ninguno")); //Por las dudas para saber el cobro y el saldo y la diferencia
-        System.out.println("Saldo actual: " + saldo);
+        // La vista debe encargarse de mostrar el cobro asociado y el saldo actual
     }
 
     public TipoCuenta conocerTipoCuenta() {

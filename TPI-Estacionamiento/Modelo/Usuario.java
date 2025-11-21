@@ -44,12 +44,12 @@ public class Usuario {
             if (cuenta.getSaldo() >= cobro.getMonto()) {
                 cuenta.descontarMonto(cobro.getMonto());
                 cobro.registrarPago();
-                System.out.println("Pago realizado por usuario " + nombre + " " + apellido);
+                // Notificar pago realizado (Vista debe encargarse de mostrar mensajes)
             } else {
-                System.out.println("Saldo insuficiente en la cuenta.");
+                // Notificar saldo insuficiente (Vista debe encargarse de mostrar mensajes)
             }
         } else {
-            System.out.println("Cuenta no disponible.");
+            // Notificar cuenta no disponible (Vista debe encargarse de mostrar mensajes)
         }
     }
 
@@ -63,9 +63,7 @@ public class Usuario {
 
     /*public void consultarAfiliadoUTN() {
         // Simulación de consulta
-        System.out.println("Consultando datos en el sistema de la UTN...");
-        // Supongamos que encontramos al usuario:
+        // La vista debe encargarse de mostrar mensajes de consulta y verificación de afiliación
         afiliadoUTN = true;
-        System.out.println("Afiliación verificada. Usuario registrado como afiliado UTN.");
     }*/
 }

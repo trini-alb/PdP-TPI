@@ -1,11 +1,12 @@
 package Modelo;
 import java.time.LocalDateTime;
 import java.time.Duration;
+
 public class EntradaSalida {
     private LocalDateTime fechaHoraEntrada;
     private LocalDateTime fechaHoraSalida;
     private Duration duracion;
-    private Tarifa tarifa;
+    private Tarifa tarifa; // La tarifa que se aplicará
 
     public EntradaSalida(LocalDateTime fechaHoraEntrada, LocalDateTime fechaHoraSalida, Tarifa tarifa) {
         this.fechaHoraEntrada = fechaHoraEntrada;
@@ -30,21 +31,35 @@ public class EntradaSalida {
         return tarifa;
     }
 
+    /**
+     * ¡MÉTODO CORREGIDO!
+     * Ahora este método es el responsable de calcular el costo.
+     * Utiliza la tarifa que se le inyectó y sus propias fechas.
+     */
     public double calcularCosto() {
-        return tarifa.calcularTotal(); //Revisar
+        if (tarifa == null) {
+            // Si no tiene tarifa asignada, no puede cobrar.
+            return 0.0;
+        }
+        
+        // Delega el cálculo a la tarifa, usando sus propias fechas de entrada y salida
+        return tarifa.calcularCosto(this.fechaHoraEntrada, this.fechaHoraSalida);
     }
 
     public void registrarEntrada() {
         fechaHoraEntrada = LocalDateTime.now();
-        System.out.println("Entrada registrada en " + fechaHoraEntrada);
+        // (Los comentarios de notificación se eliminan porque la Vista no debe estar aquí)
     }
 
+    /**
+     * Este método es llamado por Plaza.java
+     * Establece la hora de salida y calcula la duración final.
+     */
     public void registrarSalida() {
         fechaHoraSalida = LocalDateTime.now();
         if (fechaHoraEntrada != null && fechaHoraSalida != null) {
             duracion = Duration.between(fechaHoraEntrada, fechaHoraSalida);
         }
-        System.out.println("Salida registrada en " + fechaHoraSalida + ", Duracion: " + (duracion != null ? duracion.toHours() : 0) + " horas");
     }
 
     public Duration calcularDuracion() {
@@ -58,8 +73,3 @@ public class EntradaSalida {
         return tarifa;
     }
 }
-
-    // Si necesitas asociar una plaza, descomenta la variable plaza y este método
-    // public Plaza conocerPlaza() {
-    //     return plaza;
-    // }

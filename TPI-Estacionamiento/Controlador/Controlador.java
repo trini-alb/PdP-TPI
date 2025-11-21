@@ -2,17 +2,18 @@ package Controlador;
 
 import Modelo.*;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Controlador {
 
     private List<Plaza> plazas;
-    private static final double TARIFA_POR_DIA = 1000.0;
+    private Tarifa tarifaVigente; 
 
     public Controlador() {
         plazas = new ArrayList<>();
+        tarifaVigente = new Tarifa(); 
+
         for (int i = 1; i <= 3; i++) {
             plazas.add(new Plaza(Estado.DISPONIBLE, i, null, null, null));
         }
@@ -21,58 +22,45 @@ public class Controlador {
     public LocalDateTime ocuparPlaza(int numeroPlaza, String usuario) {
         Plaza plaza = buscarPlaza(numeroPlaza);
 
+        // Validaciones
         if (plaza == null) {
-            System.out.println("No existe esa plaza.");
             return null;
         }
 
         if (plaza.conocerEstado() == Estado.OCUPADA) {
-            System.out.println("La plaza ya está ocupada.");
-            return null;
+            return null; // La plaza ya está ocupada
         }
 
-        EntradaSalida es = new EntradaSalida(LocalDateTime.now(), null, null);
+        EntradaSalida es = new EntradaSalida(LocalDateTime.now(), null, tarifaVigente);
+        
+        // Ocupamos la plaza en el Modelo
         plaza.ocupar(es);
 
-        System.out.println("Plaza " + numeroPlaza + " ocupada por " + usuario);
         return es.getFechaHoraEntrada();
     }
 
     public Object[] liberarPlaza(int numeroPlaza) {
         Plaza plaza = buscarPlaza(numeroPlaza);
 
-        if (plaza == null) {
-            System.out.println("No existe esa plaza.");
+        // Validaciones
+        if (plaza == null || plaza.conocerEstado() == Estado.DISPONIBLE) {
             return null;
         }
 
-        if (plaza.conocerEstado() == Estado.DISPONIBLE) {
-            System.out.println("La plaza ya está libre.");
-            return null;
-        }
-
+        EntradaSalida es = plaza.getEntradaSalida();
+        
         plaza.liberar();
 
-        LocalDateTime entrada = plaza.getEntradaSalida().getFechaHoraEntrada();
-        LocalDateTime salida = plaza.getFechaHoraDesocupacion();
+        LocalDateTime entrada = es.getFechaHoraEntrada();
+        LocalDateTime salida = es.getFechaHoraSalida(); 
 
-        long minutos = ChronoUnit.MINUTES.between(entrada, salida);
-        double costo = 0;
-
-        if (minutos >= 5) {
-            long dias = ChronoUnit.DAYS.between(entrada.toLocalDate(), salida.toLocalDate()) + 1;
-            costo = dias * TARIFA_POR_DIA;
-        }
-
-        System.out.println("Plaza " + numeroPlaza + " liberada. Costo: $" + costo);
+        double costo = tarifaVigente.calcularCosto(entrada, salida);
 
         return new Object[]{salida, costo};
     }
 
-    public void mostrarPlazas() {
-        for (Plaza p : plazas) {
-            System.out.println("Plaza " + p.getNumero() + ": " + p.conocerEstado());
-        }
+    public List<Plaza> obtenerPlazas() {
+        return plazas;
     }
 
     private Plaza buscarPlaza(int numeroPlaza) {
