@@ -1,0 +1,79 @@
+[33mcommit 40acfea31719b6c963a05524d47802a47e72faf3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Agustin <agus57cr@gmail.com>
+Date:   Fri Nov 21 22:22:44 2025 -0300
+
+    Actualizacion de plazas en controlador
+
+[33mcommit 768f00809401149ac9c88612bdb10794d96c3339[m
+Merge: 06450 d7d05
+Author: Abel <abelvillalba106@gmail.com>
+Date:   Fri Nov 21 17:13:52 2025 -0300
+
+    Merge branch 'main' of https://github.com/trini-alb/PdP-TPI
+
+[33mcommit 0645011790e4ba9a109df9b47a455ce37a897c28[m
+Author: Abel <abelvillalba106@gmail.com>
+Date:   Fri Nov 21 17:01:21 2025 -0300
+
+    Interfaces actualizadas junto con metodos agregados en controlador
+
+[33mcommit d7d05c83fdd72cf476f666d6ee663cfac9ffeb0c[m
+Author: Santiago <santiagomansilla025@gmail.com>
+Date:   Fri Nov 21 16:15:06 2025 -0300
+
+    Subo actualizaciones de la vista y controlador y tambien cree la carpeta source
+
+[33mcommit befe29fb783888eef3eaccc9759fb6d5185928eb[m
+Author: Agustin <agus57cr@gmail.com>
+Date:   Fri Nov 21 15:33:49 2025 -0300
+
+    Subo correciones SOLID (controlador, vista)
+
+[33mcommit f23175c8d5eee1af23cc44c5975381d895a8e678[m
+Merge: 989d4 d40af
+Author: Agustin <agus57cr@gmail.com>
+Date:   Fri Nov 21 15:19:23 2025 -0300
+
+    Merge branch 'main' of https://github.com/trini-alb/PdP-TPI
+
+[33mcommit 989d4455842b42ddc792b3bdf5da88cc82eeca15[m
+Author: Agustin <agus57cr@gmail.com>
+Date:   Fri Nov 21 15:16:29 2025 -0300
+
+    Correcciones principio SOLID
+
+[33mcommit d40af36d217c9c04320273c29ede1138deefd4a1[m
+Author: Abel <122401940+Villalba-Abel@users.noreply.github.com>
+Date:   Fri Nov 21 15:08:08 2025 -0300
+
+    Delete TPI-Estacionamiento.zip
+
+[33mcommit 46e72d7f876ca4b81603b80ba81ca658625a1c11[m
+Author: Abel <122401940+Villalba-Abel@users.noreply.github.com>
+Date:   Fri Nov 21 15:07:12 2025 -0300
+
+    Neatbeans 24
+
+[33mcommit dd21a8cf851e72dc9e30cf7aa41370a2325b820d[m
+Author: Trinidad <trinialbarracin13@gmail.com>
+Date:   Sun Nov 9 17:24:00 2025 -0300
+
+    Elimine archivos, y acomode un poco la main y el controlador, pero aun falta
+
+[33mcommit ffbce88f47bbb889824839e43381ee071d1f3b1c[m
+Author: unknown <mateocaullo@gmail.com>
+Date:   Mon Oct 27 19:15:38 2025 -0300
+
+    Subo archivo TPI con el primer intento de interfaz
+
+[33mcommit 36fa82541343be0c21696798de1ef338dbc6846b[m
+Author: Abel <122401940+Villalba-Abel@users.noreply.github.com>
+Date:   Mon Oct 27 18:03:34 2025 -0300
+
+    Delete TPI-Estacionamiento directory
+
+[33mcommit f707dc730b2e73cf919899ad3e9bb97706bc8ff7[m
+Author: Abel <122401940+Villalba-Abel@users.noreply.github.com>
+Date:   Mon Oct 27 18:02:29 2025 -0300
+
+    Add files via upload

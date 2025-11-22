@@ -74,6 +74,11 @@ public class PlazasDisponiblesIGU extends javax.swing.JFrame {
         jLabel3.setText("Documento:");
 
         btnVerificar.setText("Verificar");
+        btnVerificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerificarActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("CUENTA/USUARIO");
 
@@ -415,6 +420,10 @@ public class PlazasDisponiblesIGU extends javax.swing.JFrame {
     private void txtPlazasDisponibles1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlazasDisponibles1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPlazasDisponibles1ActionPerformed
+
+    private void btnVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVerificarActionPerformed
 
   
     

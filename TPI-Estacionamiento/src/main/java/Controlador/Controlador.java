@@ -1,10 +1,15 @@
 package Controlador;
 
 import Modelo.*;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 public class Controlador {
 
@@ -58,15 +63,47 @@ public class Controlador {
     
     // --- MÉTODOS PARA GESTIÓN DE CUENTAS ---
 
-    public String crearCuenta(String txtN , String txtA, String txtD, String txtV, String txtP){
-        if(txtN.length()>0 && txtA.length()>0 && txtD.length()>0 && txtV.length()>0 && txtP.length()>0){
+
+    public String crearCuenta(String txtN , String txtA, String txtD, String txtTC, String txtTU){
+        if(txtN.length()>0 && txtA.length()>0 && txtD.length()>0 && txtTC.length()>0 && txtTU.length()>0){
            // Nota: Aquí faltaría guardar el vehículo y la patente en algún lado si el modelo lo requiere
-           CuentaUsuario crearCuenta = new CuentaUsuario(txtN,txtA,txtD,0.0,null,null,null);
+           TipoCuenta tipoDeCuenta = new TipoCuenta(txtTC);
+           TipoUsuario tipoDeUsuario = new TipoUsuario(txtTU);
+           CuentaUsuario crearCuenta = new CuentaUsuario(txtN,txtA,txtD,0.0,tipoDeUsuario,tipoDeCuenta,null);
            crearCuenta.registrarCuenta();
            return "¡¡Su cuenta ha sido creada con éxito!!";
        } else {
            return "Por favor, complete los campos correspondientes.";
        }
+    }
+    private static final String NOMBRE_ARCHIVO = "C:\\Users\\Rodrigo\\Desktop\\TPI-Estacionamiento\\TPI-Estacionamiento\\src\\main\\java\\Recursos\\RegistroDeInvitado.txt";
+    public String crearInvitacion(String documento){
+        LocalDate fecha = LocalDate.now();
+        LocalTime hora = LocalTime.now();
+        if(documento.length() > 0){
+            Invitacion cuentaInvitado = new Invitacion(documento, fecha, hora);
+            // 1. Formatear la línea de datos para guardar. Usamos la coma (,) como separador.
+            String lineaDatos = documento + "," +
+                                fecha.toString() + "," +
+                                hora.toString();
+
+
+            // 2. Lógica de escritura del archivo
+            try (PrintWriter writer = new PrintWriter(new FileWriter(NOMBRE_ARCHIVO, true))) {
+
+                // El 'true' en FileWriter(NOMBRE_ARCHIVO, true) indica modo de APENDIZADO (añadir al final)
+                // Esto evita que se sobrescriban los datos existentes.
+
+                writer.println(lineaDatos); //Escribimos
+                return "Creado con Exito";
+
+            } catch (IOException e) {
+                return "❌ ERROR al guardar la cuenta en el archivo: ";
+            }
+            }else{
+                return "Complete los campos";
+            }
+        
     }
     
     public String consultarSaldo(String documento){
@@ -86,40 +123,45 @@ public class Controlador {
         }
     }
 
-    /**
-     * Método para verificar si una cuenta existe y obtener sus datos básicos.
-     * Retorna un objeto CuentaUsuario si existe, o null si no.
-     */
-    public CuentaUsuario verificarCuenta(String documento) {
-        if (documento == null || documento.trim().isEmpty()) {
-            return null;
+      
+    public String sumSaldo(String monto, String documento){
+        // 1. Validación de campos vacíos
+        if (documento.trim().isEmpty() || monto.trim().isEmpty()) {
+            // Asumo que tienes un campo para mensajes de error, si no, usa System.out.println
+            // Por ejemplo, usando tu campo de creación de cuenta
+            return "⚠️ Debe ingresar el Documento y el Monto.";
         }
-        try {
-            // Reutilizamos la lógica de consultarSaldo del modelo, pero necesitamos recuperar el nombre también.
-            // Como el método consultarSaldo solo devuelve el saldo, vamos a usar el método buscarCuentaCompleta
-            // que agregaremos en CuentaUsuario, o simulamos la búsqueda aquí.
-            // Para mantenerlo simple y usar lo que tienes, crearemos un método en CuentaUsuario que devuelva el objeto.
-            return CuentaUsuario.buscarCuenta(documento);
-        } catch (IOException e) {
-            System.err.println("Error al verificar cuenta: " + e.getMessage());
-            return null;
-        }
-    }
 
-    public String cargarSaldo(String documento, String montoStr) {
-        if (documento.isEmpty() || montoStr.isEmpty()) {
-            return "⚠️ Faltan datos.";
-        }
+        double montoAAgregar;
         try {
-            double monto = Double.parseDouble(montoStr);
-            if (monto <= 0) return "⚠️ Monto inválido.";
+            // 2. Validación de formato numérico
+            montoAAgregar = Double.parseDouble(monto);
 
-            boolean exito = CuentaUsuario.recargarSaldo(documento, monto);
-            return exito ? "✅ Saldo actualizado." : "❌ Cuenta no encontrada.";
+            if (montoAAgregar <= 0) {
+                return "⚠️ El monto a sumar debe ser mayor a cero.";
+               
+            }
+
+            // 3. Llamada al Modelo para actualizar el saldo
+            boolean exito = CuentaUsuario.recargarSaldo(documento, montoAAgregar);
+
+            // 4. Actualización de la Vista (Mensaje de resultado)
+            if (exito) {
+                return "✅ Saldo agregado con éxito al Documento: " + documento;
+            } else {
+                // El Modelo retornó 'false' (Cuenta no encontrada)
+                return "❌ Error: No se encontró la cuenta con el Documento ingresado.";
+            }
+
         } catch (NumberFormatException e) {
-            return "❌ Monto no numérico.";
-        } catch (IOException e) {
-            return "❌ Error de archivo.";
+            // Error capturado si el texto en txtAgregarSaldo no es un Double válido
+            return "❌ Error: Ingrese un monto numérico válido.";
+
+        } catch (java.io.IOException e) {
+            // Error capturado si falla la lectura/escritura del archivo
+            return "❌ ERROR I/O: Fallo al guardar en el archivo. Revise la ruta y permisos.";
+            
         }
     }
+    
 }

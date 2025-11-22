@@ -1,5 +1,6 @@
 package Modelo;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -43,11 +44,11 @@ public class CuentaUsuario {
     public String getDocumento(){
         return documento;
     }
-    public TipoUsuario getTipoUsuario() {
-        return tipoUsuario;
+    public String getTipoUsuario() {
+        return tipoUsuario.getTipo();
     }
-    public TipoCuenta getTipoCuenta() {
-        return tipoCuenta;
+    public String getTipoCuenta() {
+        return tipoCuenta.getDescripcion();
     }
     public CuentaUsuario getCuentaUsuario(){
         return this;
@@ -64,12 +65,15 @@ public class CuentaUsuario {
     //METODOS//
     // Constante para la ruta del archivo
     private static final String NOMBRE_ARCHIVO = "C:\\Users\\Rodrigo\\Desktop\\TPI-Estacionamiento\\TPI-Estacionamiento\\src\\main\\java\\Recursos\\CreacionDeUsuario.txt";
-    public void registrarCuenta(){
+    public String registrarCuenta(){
         // 1. Formatear la línea de datos para guardar. Usamos la coma (,) como separador.
         String lineaDatos = getNombre() + "," +
                             getApellido() + "," +
                             getDocumento() + "," +
-                            getSaldo();
+                            getSaldo()+ "," +
+                            getTipoCuenta()+ "," +
+                            getTipoUsuario();
+        
         
         // 2. Lógica de escritura del archivo
         try (PrintWriter writer = new PrintWriter(new FileWriter(NOMBRE_ARCHIVO, true))) {
@@ -78,10 +82,12 @@ public class CuentaUsuario {
             // Esto evita que se sobrescriban los datos existentes.
             
             writer.println(lineaDatos); //Escribimos
+            return "Creado con Exito";
 
         } catch (IOException e) {
-            System.err.println("❌ ERROR al guardar la cuenta en el archivo: " + e.getMessage());
+            return "❌ ERROR al guardar la cuenta en el archivo: ";
         }
+        
     }
         
     //pertenece a la clase misma, y no a una instancia específica (objeto) de esa clase.
@@ -117,8 +123,7 @@ public class CuentaUsuario {
 
                 } catch (NumberFormatException e) {
                     // Si el saldo no era un número, copiamos la línea vieja y registramos error
-                    System.err.println("Error: Saldo guardado con formato incorrecto. " + e.getMessage());
-                    nuevasLineas.add(linea); 
+                    return false; 
                 }
 
             } else {
@@ -163,7 +168,6 @@ public class CuentaUsuario {
                         return Double.parseDouble(datos[3].trim());
                     } catch (NumberFormatException e) {
                         // Ocurre si el saldo guardado no es un número válido.
-                        System.err.println("Error de formato de saldo en la línea: " + linea);
                         return null; 
                     }
                 }
@@ -181,12 +185,28 @@ public class CuentaUsuario {
             return null;
         }
     }
-    public String conocerTipoCuenta(TipoCuenta cuenta){
-        if(cuenta != null){
-            return cuenta.getDescripcion();
-        }else{
-            return null;
+    public String conocerTipoCuenta(String cuenta) throws IOException{
+        // Usamos try-with-resources para asegurar que el archivo se cierre.
+        try (BufferedReader br = new BufferedReader(new FileReader(NOMBRE_ARCHIVO))) {
+            String linea;
+            
+            // Lee el archivo línea por línea hasta el final.
+            while ((linea = br.readLine()) != null) {
+                
+                // Divide la línea usando la coma (,) como separador.
+                String[] datos = linea.split(",");
+                
+                // Verificamos si la línea tiene al menos 5 partes (nombre, apellido, doc, saldo, TipoCuenta)
+                // y si el documento coincide (asumiendo que el documento está en la posición [2])
+                if (datos.length >= 5 && datos[2].trim().equals(documento)) {
+                    //El TipoDato esta en el 5 elemento (Indice 2)
+                    return datos[4].trim();
+                }
+            }
         }
+        
+        // Retorna null si el bucle termina y el documento no fue encontrado.
+        return null; 
     }
     public boolean pagar(Cobro cobro){
         if(getCuentaUsuario() != null){

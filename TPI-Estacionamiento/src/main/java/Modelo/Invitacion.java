@@ -1,12 +1,12 @@
 package Modelo;
-import java.util.Date;
+import java.time.LocalDate;
 import java.time.LocalTime;
 public class Invitacion {
     private String invitado;
-    private Date fecha;
+    private LocalDate fecha;
     private LocalTime hora;
 
-    public Invitacion(String invitado, Date fecha, LocalTime hora) {
+    public Invitacion(String invitado, LocalDate fecha, LocalTime hora) {
         this.invitado = invitado;
         this.fecha = fecha;
         this.hora = hora;
@@ -16,7 +16,7 @@ public class Invitacion {
         return invitado;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
