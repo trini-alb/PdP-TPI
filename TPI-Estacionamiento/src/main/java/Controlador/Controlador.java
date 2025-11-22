@@ -21,46 +21,25 @@ public class Controlador {
         }
     }
 
-    
-    
-
-    
-    
     public LocalDateTime ocuparPlaza(int numeroPlaza, String usuario) {
         Plaza plaza = buscarPlaza(numeroPlaza);
-
-        // Validaciones
-        if (plaza == null) {
-            return null;
-        }
-
-        if (plaza.conocerEstado() == Estado.OCUPADA) {
-            return null; // La plaza ya está ocupada
-        }
+        if (plaza == null) return null;
+        if (plaza.conocerEstado() == Estado.OCUPADA) return null;
 
         EntradaSalida es = new EntradaSalida(LocalDateTime.now(), null, tarifaVigente);
-        
-        // Ocupamos la plaza en el Modelo
         plaza.ocupar(es);
-
         return es.getFechaHoraEntrada();
     }
 
     public Object[] liberarPlaza(int numeroPlaza) {
         Plaza plaza = buscarPlaza(numeroPlaza);
-
-        // Validaciones
-        if (plaza == null || plaza.conocerEstado() == Estado.DISPONIBLE) {
-            return null;
-        }
+        if (plaza == null || plaza.conocerEstado() == Estado.DISPONIBLE) return null;
 
         EntradaSalida es = plaza.getEntradaSalida();
-        
         plaza.liberar();
 
         LocalDateTime entrada = es.getFechaHoraEntrada();
         LocalDateTime salida = es.getFechaHoraSalida(); 
-
         double costo = tarifaVigente.calcularCosto(entrada, salida);
 
         return new Object[]{salida, costo};
@@ -72,47 +51,75 @@ public class Controlador {
 
     private Plaza buscarPlaza(int numeroPlaza) {
         for (Plaza p : plazas) {
-            if (p.getNumero() == numeroPlaza) {
-                return p;
-            }
+            if (p.getNumero() == numeroPlaza) return p;
         }
         return null;
     }
     
-    
+    // --- MÉTODOS PARA GESTIÓN DE CUENTAS ---
+
     public String crearCuenta(String txtN , String txtA, String txtD, String txtV, String txtP){
         if(txtN.length()>0 && txtA.length()>0 && txtD.length()>0 && txtV.length()>0 && txtP.length()>0){
+           // Nota: Aquí faltaría guardar el vehículo y la patente en algún lado si el modelo lo requiere
            CuentaUsuario crearCuenta = new CuentaUsuario(txtN,txtA,txtD,0.0,null,null,null);
            crearCuenta.registrarCuenta();
-           
            return "¡¡Su cuenta ha sido creada con éxito!!";
-           
-       }else{
-           return "Porfavor, complete los campos correspondiente.";
+       } else {
+           return "Por favor, complete los campos correspondientes.";
        }
     }
     
     public String consultarSaldo(String documento){
         if(documento.isEmpty()){
             return "¡Ingrese Documento!";
-        }else{
+        } else {
             try {
-                // 1. Llama al método estático del Modelo para buscar el saldo.
                 Double saldoEncontrado = CuentaUsuario.consultarSaldo(documento);
-                // 2. Evalúa el resultado.
                 if (saldoEncontrado != null) {
-                    // Convierte el Double a String y lo muestra.
                     return String.valueOf(saldoEncontrado);
                 } else {
                     return "No encontrado";
-        }
+                }
             } catch (IOException e) {
-                // Atrapa errores de lectura (archivo inexistente, permisos, etc.)
                 return "Error I/O";
-                
             }
         }
     }
-    
-    
+
+    /**
+     * Método para verificar si una cuenta existe y obtener sus datos básicos.
+     * Retorna un objeto CuentaUsuario si existe, o null si no.
+     */
+    public CuentaUsuario verificarCuenta(String documento) {
+        if (documento == null || documento.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            // Reutilizamos la lógica de consultarSaldo del modelo, pero necesitamos recuperar el nombre también.
+            // Como el método consultarSaldo solo devuelve el saldo, vamos a usar el método buscarCuentaCompleta
+            // que agregaremos en CuentaUsuario, o simulamos la búsqueda aquí.
+            // Para mantenerlo simple y usar lo que tienes, crearemos un método en CuentaUsuario que devuelva el objeto.
+            return CuentaUsuario.buscarCuenta(documento);
+        } catch (IOException e) {
+            System.err.println("Error al verificar cuenta: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public String cargarSaldo(String documento, String montoStr) {
+        if (documento.isEmpty() || montoStr.isEmpty()) {
+            return "⚠️ Faltan datos.";
+        }
+        try {
+            double monto = Double.parseDouble(montoStr);
+            if (monto <= 0) return "⚠️ Monto inválido.";
+
+            boolean exito = CuentaUsuario.recargarSaldo(documento, monto);
+            return exito ? "✅ Saldo actualizado." : "❌ Cuenta no encontrada.";
+        } catch (NumberFormatException e) {
+            return "❌ Monto no numérico.";
+        } catch (IOException e) {
+            return "❌ Error de archivo.";
+        }
+    }
 }
