@@ -3,14 +3,47 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
-import Controlador.*;
+import Controlador.Controlador;
+import Modelo.CuentaUsuario;
 import Modelo.Plaza;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.swing.JOptionPane;
 public class PlazasDisponiblesIGU extends javax.swing.JFrame {
 
+    Controlador controller = new Controlador();
+    
     public PlazasDisponiblesIGU() {
         initComponents();
+        this.setLocationRelativeTo(null); // Centrar ventana
+        actualizarDisponibilidad();
+        
+        // Permitir editar el número de plaza para escribir cual liberar/ocupar
+        if (txtPlazasDisponibles1 != null) {
+             txtPlazasDisponibles1.setEditable(true); 
+        }
     }
+    
+    private void actualizarDisponibilidad() {
+        // Obtiene la lista real del controlador y cuenta las DISPONIBLES
+        List<Plaza> plazas = controller.obtenerPlazas();
+        long libres = plazas.stream()
+                            .filter(p -> p.getEstado() == Modelo.Estado.DISPONIBLE)
+                            .count();
+        txtPlazasDisponibles.setText(String.valueOf(libres));
+    }
+    
+    private void limpiarCamposCuenta() {
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtDocumento1.setText("");
+        txtSaldo.setText("");
+        txtVehiculo.setText("");
+        txtPatente.setText("");
+    }
+    
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -379,7 +412,34 @@ public class PlazasDisponiblesIGU extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSaldoActionPerformed
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
-        // TODO add your handling code here:
+        String cobroStr = txtCobroTotal.getText().replace(",", ".");
+        String saldoStr = txtSaldo.getText();
+
+        if (cobroStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Primero libere una plaza (Botón SALIR).", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            double costo = Double.parseDouble(cobroStr);
+            double saldo = Double.parseDouble(saldoStr);
+
+            if (saldo >= costo) {
+                // Aquí podrías llamar a un método real para descontar saldo en el archivo
+                JOptionPane.showMessageDialog(this, "Cobro exitoso.\nNuevo saldo (simulado): " + (saldo - costo), "Pago", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Limpieza
+                limpiarCamposCuenta();
+                txtHorarioEntrada.setText("");
+                txtHorarioSalida.setText("");
+                txtCobroTotal.setText("");
+                txtPlazasDisponibles1.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Saldo insuficiente.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en los montos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnCobrarActionPerformed
 
     private void btnHomeIGUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeIGUActionPerformed
@@ -396,24 +456,62 @@ public class PlazasDisponiblesIGU extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPlazasDisponiblesActionPerformed
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        String plazasString = txtPlazasDisponibles.getText();
-        int plazasEntero = Integer.parseInt(plazasString);
-        if(plazasEntero>0){
-            plazasEntero--;
-            plazasString = String.valueOf(plazasEntero);
-            txtPlazasDisponibles.setText(plazasString);
-            
+        String plazaStr = txtPlazasDisponibles1.getText();
+        String docUsuario = txtDocumento1.getText();
+
+        if (plazaStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese N° de Plaza (1-10).", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+        if (docUsuario.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Verifique un usuario primero.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            int numPlaza = Integer.parseInt(plazaStr);
+            // Llama al controlador
+            LocalDateTime entrada = controller.ocuparPlaza(numPlaza, docUsuario);
+            
+            if (entrada != null) {
+                txtHorarioEntrada.setText(entrada.format(formatter));
+                actualizarDisponibilidad();
+                JOptionPane.showMessageDialog(this, "Plaza " + numPlaza + " ocupada.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error: Plaza ocupada o inválida.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Número de plaza inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }                
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        String plazasString = txtPlazasDisponibles.getText();
-        int plazasEntero = Integer.parseInt(plazasString);
-        if(plazasEntero<10){
-            plazasEntero++;
-            plazasString = String.valueOf(plazasEntero);
-            txtPlazasDisponibles.setText(plazasString);
-            
+        String plazaStr = txtPlazasDisponibles1.getText();
+
+        if (plazaStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese N° de Plaza a liberar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            int numPlaza = Integer.parseInt(plazaStr);
+            // Llama al controlador
+            Object[] resultado = controller.liberarPlaza(numPlaza);
+
+            if (resultado != null) {
+                LocalDateTime salida = (LocalDateTime) resultado[0];
+                double costo = (double) resultado[1];
+
+                txtHorarioSalida.setText(salida.format(formatter));
+                txtCobroTotal.setText(String.format("%.2f", costo));
+                
+                actualizarDisponibilidad();
+                JOptionPane.showMessageDialog(this, "Plaza liberada. Total: $" + costo, "Salida", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error: La plaza ya estaba libre o no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Número de plaza inválido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSalirActionPerformed
 
@@ -422,7 +520,30 @@ public class PlazasDisponiblesIGU extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPlazasDisponibles1ActionPerformed
 
     private void btnVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarActionPerformed
-        // TODO add your handling code here:
+        String documento = txtDocumento.getText();
+        if (documento.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese DNI para verificar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Llama al controlador (que busca en CuentaUsuario.java)
+        CuentaUsuario cuenta = controller.verificarCuenta(documento);
+
+        if (cuenta != null) {
+            // Si existe, llenamos los campos
+            txtNombre.setText(cuenta.getNombre());
+            txtApellido.setText(cuenta.getApellido());
+            txtDocumento1.setText(cuenta.getDocumento());
+            txtSaldo.setText(String.valueOf(cuenta.getSaldo()));
+            
+            // Vehículo/Patente por ahora vacíos (se agregarían si el modelo los guarda)
+            txtVehiculo.setText("-");
+            txtPatente.setText("-");
+        } else {
+            // Si no existe, avisamos
+            limpiarCamposCuenta();
+            JOptionPane.showMessageDialog(this, "Cuenta no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnVerificarActionPerformed
 
   
