@@ -20,6 +20,9 @@ public class CuentaUsuario {
     private TipoCuenta tipoCuenta;
     private Cobro cobro;
 
+    // Ruta relativa (IMPORTANTE: usa solo el nombre para evitar problemas de ruta en otras PC)
+    private static final String NOMBRE_ARCHIVO = "CreacionDeUsuario.txt";
+    
     public CuentaUsuario(String nombre, String apellido, String documento, Double saldo, TipoUsuario tipoUsuario, TipoCuenta tipoCuenta, Cobro cobro) {
         this.tipoUsuario = tipoUsuario;
         this.tipoCuenta = tipoCuenta;
@@ -58,13 +61,8 @@ public class CuentaUsuario {
     public void setSaldo(Double saldo){
         this.saldo = saldo;
     }
-    
-
-    
-    
+   
     //METODOS//
-    // Constante para la ruta del archivo
-    private static final String NOMBRE_ARCHIVO = "C:\\Users\\Rodrigo\\Desktop\\TPI-Estacionamiento\\TPI-Estacionamiento\\src\\main\\java\\Recursos\\CreacionDeUsuario.txt";
     public String registrarCuenta(){
         // 1. Formatear la línea de datos para guardar. Usamos la coma (,) como separador.
         String lineaDatos = getNombre() + "," +
@@ -176,6 +174,30 @@ public class CuentaUsuario {
         
         // Retorna null si el bucle termina y el documento no fue encontrado.
         return null; 
+    }
+    
+    public static CuentaUsuario buscarCuenta(String documento) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(NOMBRE_ARCHIVO))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(",");
+                // Asumimos formato: Nombre, Apellido, Documento, Saldo, ...
+                if (datos.length >= 3 && datos[2].trim().equals(documento)) {
+                    String nombre = datos[0].trim();
+                    String apellido = datos[1].trim();
+                    double saldo = 0.0;
+                    if (datos.length >= 4) {
+                        try { saldo = Double.parseDouble(datos[3].trim()); } catch (Exception e){}
+                    }
+                    
+                    // Devolvemos un objeto con los datos encontrados
+                    return new CuentaUsuario(nombre, apellido, documento, saldo, null, null, null);
+                }
+            }
+        } catch (java.io.FileNotFoundException e) {
+            return null; // Archivo no encontrado
+        }
+        return null; // Usuario no encontrado
     }
     
     public Double conocerCobro(Cobro cobro){
