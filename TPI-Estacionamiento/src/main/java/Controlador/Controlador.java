@@ -76,6 +76,21 @@ public class Controlador {
            return "Por favor, complete los campos correspondientes.";
        }
     }
+    
+    public CuentaUsuario verificarCuenta(String documento) {
+        if (documento == null || documento.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            // Llama al método estático del modelo que busca el objeto completo.
+            // NOTA: Debes asegurarte de que CuentaUsuario tenga el método buscarCuenta.
+            // Si no lo tiene, te daré el código para CuentaUsuario también.
+            return CuentaUsuario.buscarCuenta(documento);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+    
     private static final String NOMBRE_ARCHIVO = "C:\\Users\\Rodrigo\\Desktop\\TPI-Estacionamiento\\TPI-Estacionamiento\\src\\main\\java\\Recursos\\RegistroDeInvitado.txt";
     public String crearInvitacion(String documento){
         LocalDate fecha = LocalDate.now();
