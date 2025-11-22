@@ -117,7 +117,6 @@ public class VehiculoIGU extends javax.swing.JFrame {
             }
         });
 
-        txtDocInvitador.setText("-");
         txtDocInvitador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDocInvitadorActionPerformed(evt);
@@ -275,7 +274,7 @@ public class VehiculoIGU extends javax.swing.JFrame {
     private void desplegableOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableOpcionesActionPerformed
         // 1. Obtener la referencia a la propia vista (esta instancia)
         VehiculoIGU vista = this; 
-
+        txtDocInvitador.setText("-");
         // 2. Llamar al método de control estático, pasándole la vista.
         Controlador.manejarCambioInvitado(vista);
     }//GEN-LAST:event_desplegableOpcionesActionPerformed
