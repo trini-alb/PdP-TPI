@@ -1,20 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
+import Controlador.Controlador;
 
 /**
  *
  * @author Rodrigo
  */
 public class VehiculoIGU extends javax.swing.JFrame {
-
+    
+    
     /**
      * Creates new form VehiculoIGU
      */
     public VehiculoIGU() {
         initComponents();
+        jLabelInvitador.setVisible(false);
+        txtDocInvitador.setVisible(false);
     }
 
     /**
@@ -26,24 +27,288 @@ public class VehiculoIGU extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        btnHomeIGU = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtDocumento = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtPatente = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtMarca = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtModelo = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        btnRegistrarVehiculo = new javax.swing.JButton();
+        txtMensajeCreacion = new javax.swing.JTextField();
+        txtDocInvitador = new javax.swing.JTextField();
+        jLabelInvitador = new javax.swing.JLabel();
+        desplegableOpciones = new javax.swing.JComboBox<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("ESTACIONAMIENTO");
+        jLabel1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        jLabel1.setName(""); // NOI18N
+
+        btnHomeIGU.setText("HOME");
+        btnHomeIGU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHomeIGUActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("REGISTRAR VEHICULO");
+
+        txtDocumento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDocumentoActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Documento:");
+
+        txtPatente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPatenteActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Patente:");
+
+        txtMarca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMarcaActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Marca:");
+
+        txtModelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtModeloActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Modelo:");
+
+        jLabel9.setText("Invitado(Si/No):");
+
+        btnRegistrarVehiculo.setText("REGISTRAR VEHICULO");
+        btnRegistrarVehiculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarVehiculoActionPerformed(evt);
+            }
+        });
+
+        // 1. Establece la opacidad a false para que el fondo se vea a través
+        txtMensajeCreacion.setOpaque(false);
+
+        // 2. Elimina el borde visible (la línea negra)
+        txtMensajeCreacion.setBorder(null);
+        txtMensajeCreacion.setEditable(false);
+        txtMensajeCreacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMensajeCreacionActionPerformed(evt);
+            }
+        });
+
+        txtDocInvitador.setText("-");
+        txtDocInvitador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDocInvitadorActionPerformed(evt);
+            }
+        });
+
+        jLabelInvitador.setText("Doc invitador:");
+
+        desplegableOpciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Si", "No" }));
+        desplegableOpciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                desplegableOpcionesActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(259, 259, 259)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                .addGap(278, 278, 278))
+            .addComponent(jSeparator1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnRegistrarVehiculo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtMensajeCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPatente, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(desplegableOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabelInvitador)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDocInvitador, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnHomeIGU, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtPatente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabelInvitador)
+                    .addComponent(txtDocInvitador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(desplegableOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegistrarVehiculo)
+                    .addComponent(txtMensajeCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
+                .addComponent(btnHomeIGU)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    Controlador controller = new Controlador();
+    private void btnHomeIGUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeIGUActionPerformed
+        HomeIGU ventanaPlazas = new HomeIGU();
+        ventanaPlazas.setVisible(true);
+        ventanaPlazas.setLocationRelativeTo(null);
+        //cerramos la ventana actual y abrimos la nueva
+        this.dispose(); //this se refiere a la ventana actual.
+    }//GEN-LAST:event_btnHomeIGUActionPerformed
+    
+    private void txtDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocumentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDocumentoActionPerformed
 
+    private void txtPatenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPatenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPatenteActionPerformed
+
+    private void txtMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMarcaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMarcaActionPerformed
+
+    private void txtModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModeloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtModeloActionPerformed
+
+    private void btnRegistrarVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarVehiculoActionPerformed
+
+        String txtD = txtDocumento.getText();
+        String txtP = txtPatente.getText();
+        String txtMar = txtMarca.getText();
+        String txtMod = txtModelo.getText();
+        String txtInv = String.valueOf(desplegableOpciones.getSelectedItem());
+        String txtDI = txtDocInvitador.getText();
+        String mensaje = controller.registrarVehiculo(txtD, txtP, txtMar, txtMod, txtInv, txtDI);
+        txtMensajeCreacion.setText(mensaje);
+    }//GEN-LAST:event_btnRegistrarVehiculoActionPerformed
+
+    private void txtMensajeCreacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMensajeCreacionActionPerformed
+
+    }//GEN-LAST:event_txtMensajeCreacionActionPerformed
+
+    private void txtDocInvitadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocInvitadorActionPerformed
+
+    }//GEN-LAST:event_txtDocInvitadorActionPerformed
+
+    private void desplegableOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableOpcionesActionPerformed
+        // 1. Obtener la referencia a la propia vista (esta instancia)
+        VehiculoIGU vista = this; 
+
+        // 2. Llamar al método de control estático, pasándole la vista.
+        Controlador.manejarCambioInvitado(vista);
+    }//GEN-LAST:event_desplegableOpcionesActionPerformed
+    //METODOS MIOS
+    public String getOpcionInvitado(){
+        return String.valueOf(desplegableOpciones.getSelectedItem());
+    }
+    
+    public void mostrarCampoInvitador(boolean visible) {
+        jLabelInvitador.setVisible(visible);
+        txtDocInvitador.setVisible(visible);
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHomeIGU;
+    private javax.swing.JButton btnRegistrarVehiculo;
+    private javax.swing.JComboBox<String> desplegableOpciones;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelInvitador;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField txtDocInvitador;
+    private javax.swing.JTextField txtDocumento;
+    private javax.swing.JTextField txtMarca;
+    private javax.swing.JTextField txtMensajeCreacion;
+    private javax.swing.JTextField txtModelo;
+    private javax.swing.JTextField txtPatente;
     // End of variables declaration//GEN-END:variables
 }

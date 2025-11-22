@@ -1,6 +1,7 @@
 Vista\PlazasDisponiblesIGU$11.class
 Vista\PlazasDisponiblesIGU$8.class
 Vista\PlazasDisponiblesIGU$1.class
+Vista\VehiculoIGU$1.class
 Vista\Invitacion.class
 Vista\CrearCuentaIGU$1.class
 Modelo\Estacionamiento.class
@@ -10,6 +11,8 @@ Vista\CrearCuentaIGU$7.class
 Modelo\CuentaUsuario.class
 Vista\CrearCuentaIGU$4.class
 Vista\HomeIGU$1.class
+Vista\VehiculoIGU$4.class
+Vista\VehiculoIGU$9.class
 Vista\CrearCuentaIGU$17.class
 Vista\PlazasDisponiblesIGU$12.class
 Vista\CrearCuentaIGU$10.class
@@ -25,6 +28,7 @@ Vista\CrearCuentaIGU$13.class
 Modelo\TipoUsuario.class
 Modelo\Plaza.class
 Vista\CrearCuentaIGU$11.class
+Vista\VehiculoIGU$3.class
 Vista\HomeIGU$2.class
 Vista\CrearCuentaIGU$6.class
 Vista\PlazasDisponiblesIGU$6.class
@@ -32,6 +36,8 @@ Vista\CrearCuentaIGU$2.class
 Vista\PlazasDisponiblesIGU$13.class
 Modelo\Invitacion.class
 Vista\CrearCuentaIGU$14.class
+Vista\VehiculoIGU$6.class
+Vista\VehiculoIGU$7.class
 Vista\PlazasDisponiblesIGU$3.class
 Vista\CrearCuentaIGU$9.class
 Vista\PlazasDisponiblesIGU$10.class
@@ -45,6 +51,9 @@ Vista\HomeIGU$3.class
 Vista\HomeIGU.class
 Vista\CrearCuentaIGU$15.class
 Modelo\TipoCuenta.class
+Vista\VehiculoIGU$2.class
 Vista\PlazasDisponiblesIGU$4.class
 Vista\CrearCuentaIGU$8.class
+Vista\VehiculoIGU$5.class
+Vista\VehiculoIGU$8.class
 Vista\CrearCuentaIGU$18.class

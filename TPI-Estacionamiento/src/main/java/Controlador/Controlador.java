@@ -1,6 +1,7 @@
 package Controlador;
 
 import Modelo.*;
+import Vista.VehiculoIGU;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -61,8 +62,7 @@ public class Controlador {
         return null;
     }
     
-    // --- MÉTODOS PARA GESTIÓN DE CUENTAS ---
-
+    // --- MÉTODOS PARA GESTIÓN DE CUENTAS DE USUARIO ---
 
     public String crearCuenta(String txtN , String txtA, String txtD, String txtTC, String txtTU){
         if(txtN.length()>0 && txtA.length()>0 && txtD.length()>0 && txtTC.length()>0 && txtTU.length()>0){
@@ -164,4 +164,48 @@ public class Controlador {
         }
     }
     
+    
+    // --- MÉTODOS PARA GESTIÓN DE VEHICULOS ---
+    private static final String NOMBRE_ARCHIVOs = "C:\\Users\\Rodrigo\\Desktop\\TPI-Estacionamiento\\TPI-Estacionamiento\\src\\main\\java\\Recursos\\RegistroDeVehiculo.txt";
+    public String registrarVehiculo(String documento, String patente, String marca, String modelo, String invitado, String DocInvitador){
+        if(documento.length() > 0 && patente.length() > 0 && marca.length() > 0 && modelo.length() > 0 && invitado.length() > 0){
+            
+            // 1. Formatear la línea de datos para guardar. Usamos la coma (,) como separador.
+            String lineaDatos = documento + "," +
+                                patente + "," +
+                                marca+ "," +
+                                modelo+ "," +
+                                invitado+ "," +
+                                DocInvitador;
+
+
+            // 2. Lógica de escritura del archivo
+            try (PrintWriter writer = new PrintWriter(new FileWriter(NOMBRE_ARCHIVOs, true))) {
+
+                // El 'true' en FileWriter(NOMBRE_ARCHIVO, true) indica modo de APENDIZADO (añadir al final)
+                // Esto evita que se sobrescriban los datos existentes.
+
+                writer.println(lineaDatos); //Escribimos
+                return "Creado con Exito";
+
+            } catch (IOException e) {
+                return "❌ ERROR al guardar la cuenta en el archivo: ";
+            }
+            }else{
+                return "Complete los campos";
+            }
+        
+    }
+    
+    // Este método es llamado desde la vista (VehiculoIGU)
+    public static void manejarCambioInvitado(VehiculoIGU vistaVehiculo) {
+        String opcionSeleccionada = vistaVehiculo.getOpcionInvitado();
+
+        // La lógica de negocio vive aquí
+        if ("Si".equals(opcionSeleccionada)) {
+            vistaVehiculo.mostrarCampoInvitador(true);  
+        } else {
+            vistaVehiculo.mostrarCampoInvitador(false);
+        }
+    }
 }

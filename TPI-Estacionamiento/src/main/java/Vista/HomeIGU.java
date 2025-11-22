@@ -144,7 +144,11 @@ public class HomeIGU extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPlazaActionPerformed
 
     private void btnCrearCuenta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuenta1ActionPerformed
-        // TODO add your handling code here:
+        VehiculoIGU ventanaRegistrarVehiculo = new VehiculoIGU();
+        ventanaRegistrarVehiculo.setVisible(true);
+        ventanaRegistrarVehiculo.setLocationRelativeTo(null);
+        //cerramos la ventana actual y abrimos la nueva
+        this.dispose(); //this se refiere a la ventana actual.
     }//GEN-LAST:event_btnCrearCuenta1ActionPerformed
 
     
